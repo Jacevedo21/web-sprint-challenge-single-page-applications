@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useHistory } from "react";
+import React, { useState, useEffect } from "react";
 import axios from 'axios'
-import { Link, Route, Switch } from 'react-router-dom'
+import { Link, Route, Switch, useHistory } from 'react-router-dom'
 import formSchema from './component/formSchema'
 import Form from './component/Form'
 import Completed from './component/Completed'
@@ -48,11 +48,26 @@ const App = () => {
   // }, [])
 
 
-  useEffect(() => {
-    formSchema.isValid(pizza).then(valid => {
-      setDisabled(!valid)
-    })
-  }, [pizza])
+  // useEffect(() => {
+  //   formSchema.isValid(pizza).then(valid => {
+  //     setDisabled(!valid)
+  //   })
+  // }, [pizza])
+
+
+  const validatePizza = (e) => {
+    console.log(e.target.value, 'valueeeeeeeeeeee')
+    
+    yup
+      .reach(formSchema, e.target.name)
+      .validate(
+        e.target.type === "checkbox" ? e.target.checked : e.target.value
+        // e.target.value
+      )
+      .then(() => setErrors({...errors, [e.target.name]: ''}))
+        .catch(err => setErrors({...errors, [e.target.name]: err.errors}))
+        console.log(errors, 'does it work')
+  }
 
   const handleChange = (e) => {
     e.persist();
@@ -62,27 +77,22 @@ const App = () => {
     validatePizza(e);
   }
 
-  const validatePizza = (e) => {
-    yup
-      .reach(formSchema, e.target.name)
-      .validate(
-        e.target.type === "checkbox" ? e.target.checked : e.target.value
-      )
-  }
-
   const handleSubmit = (e) => {
     e.preventDefault()
-    axios.post('https://reqres.in/', forms)
+    axios.post('https://reqres.in/api/users', pizza)
       .then(res => {
-        console.log(res.data)
-        setPizza(res.data, ...pizza);
+        // console.log(res.data)
+        // setPizza(res.data, ...pizza);
         setForms(initialForm);
         history.push('/complete')
+        console.log(res.data, 'dataaaaaaaaaaaa')
       })
       .catch(err => {
         console.log(err)
       })
   }
+
+
   return (
     <div className="app">
       <h1>Lambda Eats</h1>
@@ -97,6 +107,7 @@ const App = () => {
             handleChange={handleChange}
             handleSubmit={handleSubmit}
             disable={disabled}
+            errors={errors}
           />
         </Route>
         <Route path='/complete'>
