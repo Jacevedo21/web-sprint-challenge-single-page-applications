@@ -62,11 +62,12 @@ const App = () => {
       .reach(formSchema, e.target.name)
       .validate(
         e.target.type === "checkbox" ? e.target.checked : e.target.value
+
         // e.target.value
       )
       .then(() => setErrors({...errors, [e.target.name]: ''}))
         .catch(err => setErrors({...errors, [e.target.name]: err.errors}))
-        console.log(errors, 'does it work')
+        // console.log(errors, 'does it work')
   }
 
   const handleChange = (e) => {
@@ -74,8 +75,10 @@ const App = () => {
     e.target.type === "checkbox"
       ? setPizza({ ...pizza, [e.target.name]: e.target.checked })
       : setPizza({ ...pizza, [e.target.name]: e.target.value })
+      console.log(pizza, 'this is pizza test')
     validatePizza(e);
   }
+  
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -92,6 +95,7 @@ const App = () => {
       })
   }
 
+  console.log(pizza, 'before return')
 
   return (
     <div className="app">

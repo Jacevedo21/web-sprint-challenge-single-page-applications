@@ -12,8 +12,8 @@ export default function Form(props) {
         sausage,
         errors,
     } = props
-    console.log(props)
-
+    console.log(name, 'this is topping')
+    
     return (
         <form onSubmit={handleSubmit}>
             <div className='errors'>
@@ -30,29 +30,63 @@ export default function Form(props) {
             </label>
             <label>
                 Size:
-                    <select value={size} name='size'>
+                    <select value={size} name='size' onChange={handleChange}>
                     <option value='small'>Small</option>
                     <option value='medium'>Medium</option>
                     <option value='large'>Large</option>
                 </select>
             </label>
-            <label>
+            {/* <label>
                 Plain:
-                <input type="checkbox" checked={plain} />
+                <input name="plain" type="checkbox" checked={plain} />
             </label>
             <label>
                 Bacon:
-                <input type="checkbox" checked={bacon} />
+                <input name="bacon" type="checkbox" checked={bacon} />
             </label>
             <label>
                 Pepperoni:
-                <input type="checkbox" checked={pepperoni} />
+                <input name="pepperoni" type="checkbox" checked={pepperoni} />
             </label>
             <label>
                 Sausage:
-                <input type="checkbox" checked={sausage} />
+                <input name="sausage" type="checkbox" checked={sausage} />
             </label>
-            <button onClick={handleSubmit}>Place Order</button>
+            <button id='submitBtn' onClick={handleSubmit}>Place Order</button> */}
+            <label>plain
+                <input 
+                 type="checkbox"
+                 name="plain"
+                 checked={plain}
+                 onChange={handleChange}
+                />
+            </label>
+            <label>bacon
+                <input 
+                 type="checkbox"
+                 name="bacon"
+                 checked={bacon}
+                 onChange={handleChange}
+                />
+            </label>
+            <label>pepperoni
+                <input 
+                 type="checkbox"
+                 name="pepperoni"
+                 checked={pepperoni}
+                 onChange={handleChange}
+                />
+            </label>
+            <label>sausage
+                <input 
+                 type="checkbox"
+                 name="sausage"
+                 checked={sausage}
+                 onChange={handleChange}
+                />
+            </label>
+            <button id='submitBtn' onClick={handleSubmit}>Place Order</button>
+
         </form>
     )
 }
